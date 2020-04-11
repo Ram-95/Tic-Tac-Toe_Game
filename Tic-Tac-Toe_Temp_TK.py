@@ -41,20 +41,20 @@ def check():
 '''------------------------------------------------ Tkinter User Interface ------------------------------------------'''
 root = Tk()
 root.title('Tic-Tac-Toe Game')
-root.geometry('900x700')
+root.geometry('850x700')
 
 #Dividing the Screen into 2 parts
-top = Frame(root, borderwidth=1, relief="solid")
-bottom = Frame(root, borderwidth=0, relief="solid")
-left = Frame(bottom, borderwidth=0, relief="solid")
-right = Frame(bottom, borderwidth=0, relief="solid")
-container = Frame(left, borderwidth=0, relief="solid")
-container2 = Frame(left, borderwidth=0, relief="solid")
-container3 = Frame(right, borderwidth=0, relief="solid")
-container4 = Frame(right, borderwidth=0, relief="solid")
-container5 = Frame(left, borderwidth=0, relief="solid")
-container7 = Frame(left, borderwidth=0, relief="solid")
-container6 = Frame(left, borderwidth=0, relief="solid")
+top = Frame(root, borderwidth=1, relief="sunken")
+bottom = Frame(root, borderwidth=0, relief="sunken")
+left = Frame(bottom, borderwidth=0, relief="sunken")
+right = Frame(bottom, borderwidth=0, relief="sunken")
+container = Frame(left, borderwidth=0, relief="sunken")
+container2 = Frame(left, borderwidth=0, relief="sunken")
+container3 = Frame(right, borderwidth=0, relief="sunken")
+container4 = Frame(right, borderwidth=0, relief="sunken")
+container5 = Frame(left, borderwidth=0, relief="sunken")
+container7 = Frame(left, borderwidth=0, relief="sunken")
+container6 = Frame(left, borderwidth=0, relief="sunken")
 
 
 #Creating Labels and setting the properties
@@ -119,7 +119,7 @@ b4 = Button(container6, text = "Reset Everything", font="Consolas 15 bold", fg="
             padx=5, pady=5, command=reset)
 
 
-'''------------------- TIC-TAC-TOE Buttons -------------------------- '''
+'''------------------------------------------------- TIC-TAC-TOE Board ------------------------------------------------ '''
 
 button1=Button(container4, bg="white",width=3,text="   ",font=('arial',60,'bold'),relief="sunken",bd=10)
 button1.grid(row=1,column=1)
@@ -148,7 +148,11 @@ button6.grid(row=3,column=2)
 button6=Button(container4, bg="white",width=3,text="   ",font=('arial',60,'bold'),relief="sunken",bd=10)
 button6.grid(row=3,column=3)
 
+#Below board that shows the players' turns
+end_label=Label(container4, text="'s Chance",font=('arial',20,'bold'))
+end_label.grid(row=4,column=0,columnspan=5)
 
+'''-------------------------------------------------------- END of TIC TAC TOE Board --------------------------------------------------- '''
 
 #Packing Labels
 label.pack()
