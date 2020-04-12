@@ -1,5 +1,6 @@
 from tkinter import *
 import random
+from tkinter import messagebox
 from tkinter import ttk
 
 '''---------------------------------------------------Functions ------------------------------------------------------'''
@@ -23,20 +24,83 @@ def button(frame):
 
 #Resets everything after every game
 def reset():
-    pass
+    #Resetting the Buttons
+    button1.config(text="", state=NORMAL)
+    button2.config(text="", state=NORMAL)
+    button3.config(text="", state=NORMAL)
+    button4.config(text="", state=NORMAL)
+    button5.config(text="", state=NORMAL)
+    button6.config(text="", state=NORMAL)
+    button7.config(text="", state=NORMAL)
+    button8.config(text="", state=NORMAL)
+    button9.config(text="", state=NORMAL)
+
+    #Setting the Mode of playing buttons
+    b1.config(state=NORMAL)
+    b2.config(state=NORMAL)
+    
 
 #Getting the Players name
-def submit():    
+def submit():
+    global details_1
+    global details_2
     details_1 = "Player1" if p1.get() == "" else p1.get()
     details_2 = "Player2" if p2.get() == "" else p2.get()
-    info = '\nPlayer-1 Name: ' + details_1[:10].title() + ' (X)\n\nPlayer-2 Name: ' + details_2[:10].title() + ' (O)'
+    info = '\nPlayer-1 Name: ' + details_1[:10].title() + ' (O)\n\nPlayer-2 Name: ' + details_2[:10].title() + ' (X)'
     label8.config(text=info, font="Times 16 bold", fg="blue")
       
+#Horizontal Check
+def horizontal():
+    if((button1["text"] == button2["text"] == button3["text"] and button1["text"] != "") or
+       (button4["text"] == button5["text"] == button6["text"] and button4["text"] != "") or
+       (button7["text"] == button8["text"] == button9["text"] and button7["text"] != "")):
+        return True
+    else:
+        return False
+
+#Vertical Check
+def vertical():
+    if((button1["text"] == button4["text"] == button7["text"] and button1["text"] != "") or
+       (button2["text"] == button5["text"] == button8["text"] and button2["text"] != "") or
+       (button3["text"] == button6["text"] == button9["text"] and button3["text"] != "")):
+        return True
+    else:
+        return False
+
+#Diagonal Check
+def diagonal():
+    if((button1["text"] == button5["text"] == button9["text"] and button1["text"] != "") or
+       (button7["text"] == button5["text"] == button3["text"] and button7["text"] != "")):
+        return True
+    else:
+        return False
+
+#Code for checking if match is tied
+def draw():
+    if(button1["state"] == button2["state"] == button3["state"] == button4["state"] ==
+       button5["state"] == button6["state"] == button7["state"] == button8["state"] ==
+       button9["state"]):
+        return True
+    return False
 
 #Checks if the winning conditions are met
 def check():
-    pass
+    if horizontal() or vertical() or diagonal():
+        messagebox.showinfo("GAME OVER","Somebody Won the Match")
+        reset()
+    elif draw():
+        messagebox.showinfo("GAME DRAW","Match is Tied")
+        reset()
+        
 
+#Function to execute when button is clicked
+def click(row,col,button):
+    global flag
+    button.config(text=a[flag],state=DISABLED,disabledforeground=colour[a[flag]])
+    chance = details_1[:10].title() + "(O)'s Chance" if flag == 1 else details_2[:10].title() + "(X)'s Chance"
+    end_label.config(text=chance)
+    flag = 0 if flag == 1 else 1
+    check()
 
 '''------------------------------------------------ Tkinter User Interface ------------------------------------------'''
 root = Tk()
@@ -121,35 +185,38 @@ b4 = Button(container6, text = "Reset Everything", font="Consolas 15 bold", fg="
 
 '''------------------------------------------------- TIC-TAC-TOE Board ------------------------------------------------ '''
 
-button1=Button(container4, bg="white",width=3,text="   ",font=('arial',60,'bold'),relief="sunken",bd=10)
+button1=Button(container4, bg="white",width=3,font=('arial',60,'bold'),relief="sunken",bd=10, command=lambda row=1,col=1:click(row,col,button1))
 button1.grid(row=1,column=1)
 
-button2=Button(container4,bg="white",width=3,text="   ",font=('arial',60,'bold'),relief="sunken",bd=10)
+button2=Button(container4,bg="white",width=3,font=('arial',60,'bold'),relief="sunken",bd=10, command=lambda row=1,col=2:click(row,col,button2))
 button2.grid(row=1,column=2)
 
-button3=Button(container4, bg="white",width=3,text="   ",font=('arial',60,'bold'),relief="sunken",bd=10)
+button3=Button(container4, bg="white",width=3,font=('arial',60,'bold'),relief="sunken",bd=10, command=lambda row=1,col=3:click(row,col,button3))
 button3.grid(row=1,column=3)
 
-button4=Button(container4,  bg="white",width=3,text="   ",font=('arial',60,'bold'),relief="sunken",bd=10)
+button4=Button(container4,  bg="white",width=3,font=('arial',60,'bold'),relief="sunken",bd=10, command=lambda row=2,col=1:click(row,col,button4))
 button4.grid(row=2,column=1)
 
-button5=Button(container4, bg="white",width=3,text="   ",font=('arial',60,'bold'),relief="sunken",bd=10)
+button5=Button(container4, bg="white",width=3,font=('arial',60,'bold'),relief="sunken",bd=10, command=lambda row=2,col=2:click(row,col,button5))
 button5.grid(row=2,column=2)
 
-button6=Button(container4, bg="white",width=3,text="   ",font=('arial',60,'bold'),relief="sunken",bd=10)
+button6=Button(container4, bg="white",width=3,font=('arial',60,'bold'),relief="sunken",bd=10, command=lambda row=2,col=3:click(row,col,button6))
 button6.grid(row=2,column=3)
 
-button6=Button(container4, bg="white",width=3,text="   ",font=('arial',60,'bold'),relief="sunken",bd=10)
-button6.grid(row=3,column=1)
+button7=Button(container4, bg="white",width=3,font=('arial',60,'bold'),relief="sunken",bd=10,
+               command=lambda row=3,col=1:click(row,col,button7))
+button7.grid(row=3,column=1)
 
-button6=Button(container4, bg="white",width=3,text="   ",font=('arial',60,'bold'),relief="sunken",bd=10)
-button6.grid(row=3,column=2)
+button8=Button(container4, bg="white",width=3,font=('arial',60,'bold'),relief="sunken",bd=10,
+               command=lambda row=3,col=2:click(row,col,button8))
+button8.grid(row=3,column=2)
 
-button6=Button(container4, bg="white",width=3,text="   ",font=('arial',60,'bold'),relief="sunken",bd=10)
-button6.grid(row=3,column=3)
+button9=Button(container4, bg="white",width=3,font=('arial',60,'bold'),relief="sunken",bd=10,
+               command=lambda row=3,col=3:click(row,col,button9))
+button9.grid(row=3,column=3)
 
 #Below board that shows the players' turns
-end_label=Label(container4, text="'s Chance",font=('arial',20,'bold'))
+end_label=Label(container4, text="(O)'s Chance",font=('arial',20,'bold'))
 end_label.grid(row=4,column=0,columnspan=5)
 
 '''-------------------------------------------------------- END of TIC TAC TOE Board --------------------------------------------------- '''
@@ -169,6 +236,16 @@ b2.pack(side="bottom")
 b3.pack(side="bottom")
 b4.pack(side="top")
 sep.pack(side="left", fill="y", padx=4, pady=4)
+
+#Flag to change between the players - 0 -> 1st Player 1-> 2nd Player
+global flag
+flag = 0
+details_1 = ''
+details_2 = ''
+
+a = ['O','X']
+colour={'O':"red",'X':"lawn green"}
+
 
 #Disables resizing the window
 root.resizable(False, False)
