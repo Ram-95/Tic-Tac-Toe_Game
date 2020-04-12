@@ -3,12 +3,13 @@ import random
 from tkinter import messagebox
 from tkinter import ttk
 
-'''---------------------------------------------------Functions ------------------------------------------------------'''
+'''--------------------------------------------------- Functions ------------------------------------------------------'''
 #Sets the name of the Game Mode as Heading on Top of the Board
 def player_vs_player():
     pass
 
 
+''' To do Later after completing Player vs Player Mode.'''
 def computer_vs_player():
     pass
 
@@ -38,16 +39,29 @@ def reset():
     #Setting the Mode of playing buttons
     b1.config(state=NORMAL)
     b2.config(state=NORMAL)
+    b3.config(state=NORMAL)
+
+    #Resetting the Playing Mode and the Player Names entry fields
+    label5.config(text="Please Select Playing Mode", fg="black")
+    p1.set("")
+    p2.set("")
+
+    #Resetting the Player Details
+    label8.config(text="\nPlayer-1 (O) \n\nPlayer-2 (X)")
     
 
 #Getting the Players name
 def submit():
     global details_1
     global details_2
-    details_1 = "Player1" if p1.get() == "" else p1.get()
-    details_2 = "Player2" if p2.get() == "" else p2.get()
+    global player_names
+    details_1 = "Player-1" if p1.get() == "" else p1.get()
+    details_2 = "Player-2" if p2.get() == "" else p2.get()
+    player_names[0] = details_1[:10].title()
+    player_names[1] = details_2[:10].title()
     info = '\nPlayer-1 Name: ' + details_1[:10].title() + ' (O)\n\nPlayer-2 Name: ' + details_2[:10].title() + ' (X)'
     label8.config(text=info, font="Times 16 bold", fg="blue")
+    b3.config(state='disabled')
       
 #Horizontal Check
 def horizontal():
@@ -85,22 +99,25 @@ def draw():
 
 #Checks if the winning conditions are met
 def check():
+    global flag
+    global player_names
     if horizontal() or vertical() or diagonal():
-        messagebox.showinfo("GAME OVER","Somebody Won the Match")
+        messagebox.showinfo("GAME OVER",f"'{player_names[flag]}' won the Game. Congratulations!!!")
         reset()
     elif draw():
-        messagebox.showinfo("GAME DRAW","Match is Tied")
+        messagebox.showinfo("GAME DRAW","Match is Tied.")
         reset()
         
 
-#Function to execute when button is clicked
+#Function to execute when button is clicked - setting X's and O's on the board
 def click(row,col,button):
     global flag
     button.config(text=a[flag],state=DISABLED,disabledforeground=colour[a[flag]])
     chance = details_1[:10].title() + "(O)'s Chance" if flag == 1 else details_2[:10].title() + "(X)'s Chance"
     end_label.config(text=chance)
-    flag = 0 if flag == 1 else 1
     check()
+    flag = 0 if flag == 1 else 1
+    
 
 '''------------------------------------------------ Tkinter User Interface ------------------------------------------'''
 root = Tk()
@@ -131,7 +148,7 @@ label5 = Label(container3, text="Please Select Playing Mode", font='Calibri 20 b
 label6 = Label(container4, height="800", width="800")
 label7 = Label(container5, text="Player Details", font="Times 16 underline")
 label8 = Label(container5, font="Times 16 bold", fg="blue")
-label8.config(text="\nPlayer-1 (X) \n\nPlayer-2 (O)")
+label8.config(text="\nPlayer-1 (O) \n\nPlayer-2 (X)")
 
 #Displays the borders along with text
 top.pack(side="top", expand=False, fill="both")
@@ -151,13 +168,13 @@ container7.pack(expand=False, fill="both", padx=5, pady=5)
 sep = ttk.Separator(container)
 
 '''Modes of Playing two Buttons'''
-b1 = Button(container, text = "Player vs Player", font="Consolas 16 bold", fg="white", bg="green", activebackground="coral", width="20", relief="groove",
+b1 = Button(container, text = "Player vs Player", font="Consolas 16 bold", fg="white", bg="#e6099c", activebackground="coral", width="20", relief="groove",
             padx=10, pady=10)
 #Calling the set_mode function
 b1.configure( command=lambda btn=b1: set_mode(btn))
 
 
-b2 = Button(container, text="Player vs Computer", font="Consolas 16 bold", fg="white", bg="green", activebackground="coral", width="20", relief="groove",
+b2 = Button(container, text="Player vs Computer", font="Consolas 16 bold", fg="white", bg="#e6099c", activebackground="coral", width="20", relief="groove",
             padx=10, pady=10)
 #Calling the set_mode function
 b2.configure( command=lambda btn=b2: set_mode(btn))
@@ -170,11 +187,11 @@ p2 = StringVar()
 player1 = Label(container2, text = "Player 1: ", font="Times 18").place(x = 30,y = 50)
 player2 = Label(container2, text = "Player 2: ", font="Times 18").place(x = 30,y = 90)
 
-e1 = Entry(container2, textvariable=p1, width = 50, relief="groove", font="Times 12").place(x = 120, y = 55)  
+e1 = Entry(container2, textvariable=p1, width = 50, relief="groove", font="Times 12").place(x = 120, y = 55)
 e2 = Entry(container2, textvariable=p2, width = 50, relief="groove", font="Times 12").place(x = 120, y = 95)
 
 #Button for Submit
-b3 = Button(container2, text = "Submit", font="Consolas 12 bold", fg="white", bg="indigo", activebackground="coral", relief="groove",
+b3 = Button(container2, text = "Submit", font="Consolas 12 bold", fg="white", bg="#08c7a7", activebackground="coral", relief="groove",
             padx=5, pady=5, command=submit)
  
 
@@ -237,8 +254,11 @@ b3.pack(side="bottom")
 b4.pack(side="top")
 sep.pack(side="left", fill="y", padx=4, pady=4)
 
-#Flag to change between the players - 0 -> 1st Player 1-> 2nd Player
+#Flag to change between the players - 1 -> 1st Player 0-> 2nd Player
 global flag
+global player_names
+
+player_names = ['Player-1', 'Player-2']
 flag = 0
 details_1 = ''
 details_2 = ''
