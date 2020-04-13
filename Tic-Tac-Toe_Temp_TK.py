@@ -3,6 +3,20 @@ import random
 from tkinter import messagebox
 from tkinter import ttk
 
+'''--------------------------------------------------- Variables ------------------------------------------------------'''
+#Flag to change between the players - 1 -> 1st Player 0-> 2nd Player
+global flag
+global player_names
+
+player_names = ['Player-1', 'Player-2']
+flag = 0
+details_1 = ''
+details_2 = ''
+
+a = ['O','X']
+colour={'O':"red",'X':"lawn green"}
+
+
 '''--------------------------------------------------- Functions ------------------------------------------------------'''
 #Sets the name of the Game Mode as Heading on Top of the Board
 def player_vs_player():
@@ -25,6 +39,12 @@ def button(frame):
 
 #Resets everything after every game
 def reset():
+    global flag
+    global details_1
+    global details_2
+    global player_names
+    flag = 0 if flag == 1 else 1
+    global a
     #Resetting the Buttons
     button1.config(text="", state=NORMAL)
     button2.config(text="", state=NORMAL)
@@ -44,10 +64,15 @@ def reset():
     #Resetting the Playing Mode and the Player Names entry fields
     label5.config(text="Please Select Playing Mode", fg="black")
     p1.set("")
+    details_1 = ""
+    details_2 = ""
     p2.set("")
+    player_names = ['Player-1', 'Player-2']
 
     #Resetting the Player Details
     label8.config(text="\nPlayer-1 (O) \n\nPlayer-2 (X)")
+    #end_label.config(text=f"({a[flag]})'s chance")
+    end_label.config(text="")
     
 
 #Getting the Players name
@@ -90,7 +115,7 @@ def diagonal():
         return False
 
 #Code for checking if match is tied
-def draw():
+def game_draw():
     if(button1["state"] == button2["state"] == button3["state"] == button4["state"] ==
        button5["state"] == button6["state"] == button7["state"] == button8["state"] ==
        button9["state"]):
@@ -104,7 +129,7 @@ def check():
     if horizontal() or vertical() or diagonal():
         messagebox.showinfo("GAME OVER",f"'{player_names[flag]}' won the Game. Congratulations!!!")
         reset()
-    elif draw():
+    elif game_draw():
         messagebox.showinfo("GAME DRAW","Match is Tied.")
         reset()
         
@@ -233,7 +258,7 @@ button9=Button(container4, bg="white",width=3,font=('arial',60,'bold'),relief="s
 button9.grid(row=3,column=3)
 
 #Below board that shows the players' turns
-end_label=Label(container4, text="(O)'s Chance",font=('arial',20,'bold'))
+end_label=Label(container4, text=f"({a[flag]})'s chance",font=('arial',20,'bold'))
 end_label.grid(row=4,column=0,columnspan=5)
 
 '''-------------------------------------------------------- END of TIC TAC TOE Board --------------------------------------------------- '''
@@ -253,18 +278,6 @@ b2.pack(side="bottom")
 b3.pack(side="bottom")
 b4.pack(side="top")
 sep.pack(side="left", fill="y", padx=4, pady=4)
-
-#Flag to change between the players - 1 -> 1st Player 0-> 2nd Player
-global flag
-global player_names
-
-player_names = ['Player-1', 'Player-2']
-flag = 0
-details_1 = ''
-details_2 = ''
-
-a = ['O','X']
-colour={'O':"red",'X':"lawn green"}
 
 
 #Disables resizing the window
