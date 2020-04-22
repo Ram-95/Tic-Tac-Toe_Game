@@ -1,8 +1,10 @@
-#Tic Tac Toe - NxN Board. Players will play in turns.
+#Tic Tac Toe - NxN Board. Two Players will play in turns.
 
 #Random Module to make Computer randomly choose the position to place.
 from random import *
 
+
+'''======================================= START of GAME related FUNCTIONS =============================================='''
 def row_check(board, player):
     ''' Checks if all the postions are filled with the player symbol same row-wise. '''
     for i in range(n):
@@ -52,12 +54,12 @@ def winner_check(board, player):
         return True
     return False
 
-
+'''======================================= END of GAME related FUNCTIONS =============================================='''
 
 def tic_tac_toe_comp_player(board):
     '''Main Logic of the Game in Computer vs Player Mode. '''
     turns = n*n
-    player_name = input('Enter the Name of the Player: ').strip()
+    player_name = input('Enter the Name of the Player: ').strip().title()
 
     #Visited array to mark as visited
     visited = [x for x in range(turns)]
@@ -73,7 +75,7 @@ def tic_tac_toe_comp_player(board):
     chances = 0
 
     while True:
-        print('-' * string_formatter + ' Computer\'s Turn ' + '-' * string_formatter)
+        print('-' * string_formatter + ' Computer\'s Turn (X) ' + '-' * string_formatter)
         ch = visited[randrange(0,len(visited))] if len(visited) > 1 else visited[0]
         print('Computer\'s Choice: {}'.format(ch))
         
@@ -88,7 +90,7 @@ def tic_tac_toe_comp_player(board):
 
         #Check if there is a possibility of winning the game
         if winner_check(board, comp):
-            print('Computer Won the Game.')
+            print('Computer (X) Won the Game.')
             return '=' * string_formatter + ' GAME OVER! ' + '=' * string_formatter
 
         #Break out of the loop when number crosses N^2 {That's when we know if there is a Tie}
@@ -96,7 +98,7 @@ def tic_tac_toe_comp_player(board):
             break
         
     
-        print('*' * string_formatter + ' ' + player_name + '\'s Turn ' + '*' * string_formatter)
+        print('*' * string_formatter + ' ' + player_name + '\'s (' + player  +') Turn ' + '*' * string_formatter)
         
         while True:
             print(visited)
@@ -117,7 +119,7 @@ def tic_tac_toe_comp_player(board):
 
         #Check if there is a possibility of winning the game
         if winner_check(board, player):
-            print('{} Won the Game.'.format(player_name))
+            print('{} (O) Won the Game.'.format(player_name))
             return '=' * string_formatter + ' GAME OVER! ' + '=' * string_formatter
             
         #Break out of the loop when the number of turns crosses N^2
@@ -133,8 +135,9 @@ def tic_tac_toe_2_players(board):
     ''' Main Logic of Tic-Tac-Toe Game goes here. Player vs Player Mode. '''
     turns = n*n
     
-    first_player_name = input('Enter 1st player name: ').strip()
-    second_player_name = input('Enter 2nd player name: ').strip()
+    first_player_name = input('Enter 1st player name: ').strip().title()
+    second_player_name = input('Enter 2nd player name: ').strip().title()
+    print('\n')
 
     #Visited array to mark as visited
     visited = [x for x in range(turns)]
@@ -149,7 +152,7 @@ def tic_tac_toe_2_players(board):
     chances = 0
 
     while True:
-        print('*' * string_formatter + ' ' + first_player_name + '\'s Turn ' + '*' * string_formatter)
+        print('*' * string_formatter + ' ' + first_player_name + '\'s (' + fp + ') Turn ' + '*' * string_formatter)
         
         while True:
             print(visited)
@@ -170,7 +173,7 @@ def tic_tac_toe_2_players(board):
 
         #Check if there is a possibility of winning the game
         if winner_check(board, fp):
-            print('{} Won the Game.'.format(first_player_name))
+            print('{} ({}) Won the Game.'.format(first_player_name, fp))
             return '=' * string_formatter + ' GAME OVER! ' + '=' * string_formatter
 
         #Break out of the loop when number crosses N^2 {That's when we know if there is a Tie}
@@ -178,7 +181,7 @@ def tic_tac_toe_2_players(board):
             break
         
     
-        print('*' * string_formatter + ' ' + second_player_name + '\'s Turn ' + '*' * string_formatter)
+        print('*' * string_formatter + ' ' + second_player_name + '\'s (' + sp + ') Turn ' + '*' * string_formatter)
         
         while True:
             print(visited)
@@ -199,7 +202,7 @@ def tic_tac_toe_2_players(board):
 
         #Check if there is a possibility of winning the game
         if winner_check(board, sp):
-            print('{} Won the Game.'.format(second_player_name))
+            print('{} {()} Won the Game.'.format(second_player_name, sp))
             return '=' * string_formatter + ' GAME OVER! ' + '=' * string_formatter
             
         #Break out of the loop when the number of turns crosses N^2
