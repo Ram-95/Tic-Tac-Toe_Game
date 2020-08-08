@@ -1,3 +1,4 @@
+'''Command Line Application of Tic-Tac-Toe on NxN Board. '''
 #Tic Tac Toe - NxN Board. Two Players will play in turns.
 
 #Random Module to make Computer randomly choose the position to place.
