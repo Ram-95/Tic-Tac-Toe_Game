@@ -4,4 +4,4 @@
    - Player vs Player - A player plays with another player.
 
 ### Below is the Snapshot of the game.
-  - ![Tic-Tac-Toe](https://raw.githubusercontent.com/Ram-95/Tic-Tac-Toe_Game/master/snapshots/tic-tac-toe_game.JPG)
+   ![Tic-Tac-Toe](https://raw.githubusercontent.com/Ram-95/Tic-Tac-Toe_Game/master/snapshots/tic-tac-toe_game.JPG)
